@@ -1,4 +1,36 @@
-@for (todo of todoItems(); track $index) {
-    <p>{{todo.title}}</p>
-    
-}
+<div class="todos-container">
+  <div class="todos-header">
+    <h2 class="todos-title">
+      <span class="todos-icon">📝</span>
+      My Todo List
+    </h2>
+    <div class="todos-stats">
+      <span class="stat-item">
+        <span class="stat-number">{{todoItems().length}}</span>
+        <span class="stat-label">Total</span>
+      </span>
+      <span class="stat-item">
+        <span class="stat-number">{{getCompletedCount()}}</span>
+        <span class="stat-label">Completed</span>
+      </span>
+      <span class="stat-item">
+        <span class="stat-number">{{getPendingCount()}}</span>
+        <span class="stat-label">Pending</span>
+      </span>
+    </div>
+  </div>
+  @if (!todoItems().length) {
+    <p>Loading...</p>
+  }
+  <div class="todos-list">
+    @for (todo of todoItems(); track todo.id) {
+      <app-todo-item (todoToggled)="this.updateTodoItem($event)" [todo]="todo"/>
+    } @empty {
+      <div class="empty-state">
+        <div class="empty-icon">📋</div>
+        <h3>No todos yet!</h3>
+        <p>Add some tasks to get started.</p>
+      </div>
+    }
+  </div>
+</div>

@@ -1,1 +1,23 @@
-<p>todo-item works!</p>
+<div class="todo-card" [class.completed]="todo().completed">
+    <div class="todo-checkbox">
+      <input 
+        type="checkbox" 
+        [checked]="todo().completed"
+        (change)="this.todoClicked()"
+        class="checkbox-input"
+      >
+      <span class="checkmark"></span>
+    </div>
+    <div appHighlightCompletedTodo [isCompleted]="todo().completed" class="todo-content">
+      <h3 class="todo-title">{{todo().title}}</h3>
+      <div class="todo-meta">
+        <span class="todo-id">ID: {{todo().id}}</span>
+        <span class="todo-user">User: {{todo().userId}}</span>
+      </div>
+    </div>
+    <div class="todo-status">
+      <span class="status-badge" [class.completed]="todo().completed">
+        {{todo().completed ? '✓ Done' : '⏳ Pending'}}
+      </span>
+    </div>
+  </div>
