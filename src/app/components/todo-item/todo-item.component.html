@@ -9,7 +9,7 @@
       <span class="checkmark"></span>
     </div>
     <div appHighlightCompletedTodo [isCompleted]="todo().completed" class="todo-content">
-      <h3 class="todo-title">{{todo().title}}</h3>
+      <h3 class="todo-title">{{todo().title | uppercase}}</h3>
       <div class="todo-meta">
         <span class="todo-id">ID: {{todo().id}}</span>
         <span class="todo-user">User: {{todo().userId}}</span>
