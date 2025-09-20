@@ -20,17 +20,44 @@
     </div>
   </div>
   @if (!todoItems().length) {
-    <p>Loading...</p>
+  <p>Loading...</p>
   }
-  <div class="todos-list">
-    @for (todo of todoItems(); track todo.id) {
-      <app-todo-item (todoToggled)="this.updateTodoItem($event)" [todo]="todo"/>
-    } @empty {
-      <div class="empty-state">
-        <div class="empty-icon">📋</div>
-        <h3>No todos yet!</h3>
-        <p>Add some tasks to get started.</p>
+
+  <div class="filter-section">
+    <div class="filter-header">
+      <span class="filter-icon">🔍</span>
+      <h3 class="filter-title">Search & Filter</h3>
+    </div>
+    <form class="filter-form">
+      <div class="input-group">
+        <span class="input-icon">📝</span>
+        <input 
+          name="searchTerm" 
+          [(ngModel)]="searchTerm" 
+          placeholder="Type to search todos..." 
+          type="text" 
+          class="search-input"
+        />
+        <button type="button" class="clear-btn" (click)="searchTerm.set('')" *ngIf="searchTerm()">
+          ✕
+        </button>
       </div>
+      <div class="filter-info" *ngIf="searchTerm()">
+        <span class="filter-result">
+          {{(todoItems() | filterTodos: searchTerm()).length}} result(s) found
+        </span>
+      </div>
+    </form>
+  </div>
+  <div class="todos-list">
+    @for (todo of todoItems() | filterTodos: searchTerm(); track todo.id) {
+    <app-todo-item (todoToggled)="this.updateTodoItem($event)" [todo]="todo" />
+    } @empty {
+    <div class="empty-state">
+      <div class="empty-icon">📋</div>
+      <h3>No todos yet!</h3>
+      <p>Add some tasks to get started.</p>
+    </div>
     }
   </div>
 </div>
